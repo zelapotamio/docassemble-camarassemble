@@ -1,0 +1,184 @@
+metadata:
+  title: Projeto de Lei
+---
+objects:
+  - artigo: |
+      DAList.using(
+        object_type=Thing,
+        there_are_any=True)
+---
+initial: True
+code: |
+  set_language('pt')
+---
+progress: 20
+mandatory: True
+section: Dados do Parlamentar
+question: Dados do Parlamentar
+fields:
+  - 'Nome:': autor
+    datatype: dropdown
+    choices:
+    - Ana Lúcia Rodrigues Prado
+    - Clayton Francisco Brazão	
+    - Cláudio Coelho Pereira	
+    - Debora de Sousa Dau
+    - Denise Cristina Lima de Andrade
+    - Eunice Maria Mendes
+    - Giulliano Sousa Rodrigues	
+    - Leonardo Rodrigues da Silva Neto	
+    - Marcus Vinícius Duarte	
+    - Paulo Cesar Pereira	
+    - Renato De Almeida	
+    - Rodrigo Costa Ferreira	
+    - Sebastião Alves Ribeiro Júnior	
+    - Sebastião Joaquim Vieira	
+    - Waltemir Rodrigues Neves	
+    - Wellington Resende da Silva	
+    - Wilian Marques Postigo
+    required: True
+
+#########################################
+---
+
+progress: 40
+mandatory: True
+section: Dados do Projeto de Lei
+question: Dados do Projeto de Lei de com autoria de ${ autor }
+fields:
+  - 'Ementa do Projeto de Lei': ementa
+    datatype: area
+    default: 'Altera o inciso xx, do Parágrafo Único do artigo xx, da Lei n° xxx de 10 de fevereiro de 2014, de assunto aleatório de exemplo, para fins de preenchimento adequado das ementas.'
+    required: True
+
+#########################################
+---
+
+progress: 50
+mandatory: True
+question: |
+  Artigos
+subquestion: |
+  % for art in artigo:
+  [BR][TAB] >>  ${ art }. 
+  % endfor
+  [BR] **Os parágrafos, incisos e outros dispositivos** podem ser acrescentados **posteriormente** no modelo gerado.
+  
+back button: False
+back button label: |
+  Voltar.
+buttons:
+ - Continuar: continue
+#########################################
+---
+question: |
+  Digite o caput do 
+  ${ ordinal(i) } artigo:
+fields:
+  - Art. ${ i+1 }º: artigo[i].name.text
+#    datatype: area
+    required: False
+---
+question: |
+  Deseja inserir mais um artigo?
+yesno: artigo.there_is_another
+#########################################
+---
+progress: 60
+mandatory: True
+section: Justificativa
+question: Justificativa
+fields: 
+  - 'Preencha a justificativa (opcional)': justificativa
+    datatype: area
+    required: False
+  - 'Fotos ou documentos anexos': anexos
+    datatype: file
+    required: False
+  - 'Fotos ou documentos anexos': anexos2
+    datatype: file
+    required: False
+  - 'Fotos ou documentos anexos': anexos3
+    datatype: file
+    required: False
+#########################################
+---
+code: |
+  cargo = 'Vereador'
+  if autor ==  'Ana Lúcia Rodrigues Prado':
+    cargo = 'Vereadora'
+  if autor ==  'Debora de Sousa Dau':
+    cargo = 'Vereadora'
+  if autor ==  'Denise Cristina Lima de Andrade':
+    cargo = 'Vereadora'
+  if autor ==  'Eunice Maria Mendes':
+    cargo = 'Vereadora'
+  
+#########################################
+---
+code: |
+  
+    ano = today().year
+    data = today() 
+#########################################
+---
+
+code: |
+  proponente = 'O Vereador'
+  if cargo ==  'Vereadora':
+    proponente = 'A vereadora'
+ 
+#########################################
+---
+
+mandatory: True
+section: Checagem
+progress: 90
+question: |
+  #Confira os seus dados:  
+  
+  Projeto de Lei com autoria de ${ autor }[BR]
+  Ementa: [BR]
+  ´ ${ ementa } ´ [BR]
+  
+
+back button: True
+back button label: |
+  Voltar.
+buttons:
+ - Conferido. Gerar modelo de documento: continue
+#########################################
+---
+mandatory: True
+
+section: Impressão
+question: |
+  Documento Gerado. Baixe o docx e edite se necessário, antes de imprimir. Tente não mexer na formatação para não perdermos o padrão.
+attachment:
+  name: Projeto de Lei
+  language: pt
+  filename: PL_${ autor }__${ ano }
+  
+  docx template file: pl.docx
+  valid formats:
+    - pdf
+    - docx
+
+progress: 100
+
+#########################################
+---
+sections:
+ - Dados do Parlamentar
+ - Dados do Projeto de Lei
+ - Artigos
+ - Checagem
+ - Impressão
+#########################################
+---
+features:
+  navigation: vertical
+  progress bar: True
+  question back button: True
+#########################################
+---
