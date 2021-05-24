@@ -1,158 +1,59 @@
 metadata:
-  title: Requerimento
+  title: Checkboxes within fields
+  short title: Checkboxes
+  documentation: "https://docassemble.org/docs/fields.html#fields checkboxes"
+  example start: 1
+  example end: 2
 ---
-initial: True
-code: |
-  set_language('pt')
----
-progress: 20
-mandatory: True
-section: Dados do Parlamentar
-question: Dados do Parlamentar
-fields:
-  - 'Nome:': autor
-    datatype: dropdown
-    choices:
-    - Ana Lúcia Rodrigues Prado
-    - Clayton Francisco Brazão	
-    - Cláudio Coelho Pereira	
-    - Debora de Sousa Dau
-    - Denise Cristina Lima de Andrade
-    - Eunice Maria Mendes
-    - Giulliano Sousa Rodrigues	
-    - Leonardo Rodrigues da Silva Neto	
-    - Marcus Vinícius Duarte	
-    - Paulo Cesar Pereira	
-    - Renato De Almeida	
-    - Rodrigo Costa Ferreira	
-    - Sebastião Alves Ribeiro Júnior	
-    - Sebastião Joaquim Vieira	
-    - Waltemir Rodrigues Neves	
-    - Wellington Resende da Silva	
-    - Wilian Marques Postigo
-    required: True
-
-#########################################
----
-
-section: Dados do Requerimento
-question: Dados do Requerimento
-fields:
-  - '${ proponente } que a este subscreve vem, respeitosamente, requerer, ouvido o plenário na forma regimental, ': assunto
-    datatype: area
-    default: ' envio de ofício ao Exmo. Sr. Prefeito Municipal Renato Carvalho Fernandes, '
-    required: True
-  
-  - 'Preencha cada linha do seu texto nessas caixas (opcional)': paragrafo1
-    datatype: area
-    required: False
-    
-  - 'Preencha cada linha do seu texto nessas caixas (opcional)': paragrafo2
-    datatype: area
-    required: False
-    
-  - 'Preencha cada linha do seu texto nessas caixas (opcional)': paragrafo3
-    datatype: area
-    required: False
-
-progress: 30
-mandatory: True
-
----  
-
-
-#########################################
----
-progress: 60
-mandatory: True
-section: Justificativa
-question: Justificativa
-fields: 
-  - 'Preencha a justificativa (opcional)': justificativa
-    datatype: area
-    required: False
-  - 'Fotos ou documentos anexos': anexos
-    datatype: file
-    required: False
-  - 'Fotos ou documentos anexos': anexos2
-    datatype: file
-    required: False
-  - 'Fotos ou documentos anexos': anexos3
-    datatype: file
-    required: False
-#########################################
----
-code: |
-  cargo = 'Vereador'
-  if autor ==  'Ana Lúcia Rodrigues Prado':
-    cargo = 'Vereadora'
-  if autor ==  'Debora de Sousa Dau':
-    cargo = 'Vereadora'
-  if autor ==  'Denise Cristina Lima de Andrade':
-    cargo = 'Vereadora'
-  if autor ==  'Eunice Maria Mendes':
-    cargo = 'Vereadora'
-  
-#########################################
----
-code: |
-  
-    ano = today().year
-    data = today() 
-
-#########################################
----
-
-code: |
-  proponente = 'O Vereador'
-  if cargo ==  'Vereadora':
-    proponente = 'A vereadora'
- 
-#########################################
----
-
-mandatory: True
-section: Checagem
-progress: 90
+section : Question
 question: |
-  #Confira os seus dados:  
-  
-  Requerimento com autoria de ${ autor }[BR]
-    
-  
-
+  Please tell me what you think.
+fields:
+  - "Select the fruits you like": likes_fruit
+    datatype: checkboxes
+    choices:
+      - apple
+      - peach
+      - pear
+  - "What is your favorite fruit overall?": favorite_fruit
+---
+section: Thanks
+question: |
+  Thank you for your thoughts.
+subquestion: |
+  % if likes_fruit['apple']:
+  You like apples.
+  % endif
+  % if likes_fruit['peach']:
+  You like peaches.
+  % endif
+  % if likes_fruit['pear']:
+  You like pears.
+  % endif
+  Your favorite, though, is ${ favorite_fruit }.
+  In Python, `likes_fruit` is
+  `${ repr(likes_fruit) }`.
+#mandatory: True
 back button: True
 back button label: |
   Voltar.
 buttons:
  - Conferido. Gerar modelo de documento: continue
-#########################################
 ---
-mandatory: True
-
 section: Impressão
 question: |
   Documento Gerado. Baixe o docx e edite se necessário, antes de imprimir. Tente não mexer na formatação para não perdermos o padrão.
 attachment:
   name: Requerimento 
   language: pt
-  filename: req_${ autor }__${ ano }
+  filename: teste
   
-  docx template file: requerimento.docx
+  docx template file: req_dispensa_teste.docx
   valid formats:
-    - pdf
+#    - pdf
     - docx
 
 progress: 100
-
-#########################################
----
-sections:
- - Dados do Parlamentar
- - Dados do Requerimento
- - Checagem
- - Impressão
-#########################################
 ---
 features:
   navigation: vertical

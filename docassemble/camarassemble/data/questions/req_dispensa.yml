@@ -1,0 +1,216 @@
+metadata:
+  title: Requerimento
+---
+initial: True
+code: |
+  set_language('pt')
+---
+progress: 20
+mandatory: True
+section: Dados dos Parlamentares
+question: Dados dos Parlamentares
+subquestion: Quais parlamentares assinam esta dispensa?
+fields:
+  - 'Nome:': autores
+    datatype: checkboxes
+    choices:
+    - Ana Lúcia Rodrigues Prado
+    - Clayton Francisco Brazão	
+    - Cláudio Coelho Pereira	
+    - Debora de Sousa Dau
+    - Denise Cristina Lima de Andrade
+    - Eunice Maria Mendes
+    - Giulliano Sousa Rodrigues	
+    - Leonardo Rodrigues da Silva Neto	
+    - Marcus Vinícius Duarte	
+    - Paulo Cesar Pereira	
+    - Renato De Almeida	
+    - Rodrigo Costa Ferreira	
+    - Sebastião Alves Ribeiro Júnior	
+    - Sebastião Joaquim Vieira	
+    - Waltemir Rodrigues Neves	
+    - Wellington Resende da Silva	
+    - Wilian Marques Postigo
+    required: True
+
+#########################################
+---
+
+section: Dados da Dispensa
+question: Dados da Dispensa
+fields:
+  - 'Número do Projeto de Lei: ': numero_pl 
+    hint: '012'
+    required: True
+  
+  - 'Ementa do Projeto de Lei': ementa
+    datatype: area
+    required: True
+    
+  - 'Autor(a) do Projeto de Lei': autor_pl
+    datatype: area
+    required: False
+    
+progress: 30
+mandatory: True
+
+---  
+
+
+#########################################
+---
+#progress: 60
+#mandatory: True
+#section: Justificativa
+#question: Justificativa
+#fields: 
+#  - 'Preencha a justificativa (opcional)': justificativa
+#    datatype: area
+#    required: False
+#  - 'Fotos ou documentos anexos': anexos
+#    datatype: file
+#    required: False
+#  - 'Fotos ou documentos anexos': anexos2
+#    datatype: file
+#    required: False
+#  - 'Fotos ou documentos anexos': anexos3
+#    datatype: file
+#    required: False
+#########################################
+#---
+code: |
+
+  
+  cargo = 'Vereador'
+  autor = 'autor'
+  if autor ==  'Ana Lúcia Rodrigues Prado':
+    cargo = 'Vereadora'
+  if autor ==  'Debora de Sousa Dau':
+    cargo = 'Vereadora'
+  if autor ==  'Denise Cristina Lima de Andrade':
+    cargo = 'Vereadora'
+  if autor ==  'Eunice Maria Mendes':
+    cargo = 'Vereadora'
+  
+#########################################
+---
+code: |
+  
+    ano = today().year
+    data = today() 
+
+#########################################
+---
+
+code: |
+  
+  proponente = 'O Vereador'
+  if cargo ==  'Vereadora':
+    proponente = 'A vereadora'
+    
+    
+  proponente1 = 0  
+  if autores['Ana Lúcia Rodrigues Prado']:
+    proponente1 = 1
+  proponente2 = 0  
+  if autores['Clayton Francisco Brazão']:
+    proponente2 = 1
+  proponente3 = 0  
+  if autores['Cláudio Coelho Pereira']:
+    proponente3 = 1
+  proponente4 = 0  
+  if autores['Debora de Sousa Dau']:
+    proponente4 = 1
+  proponente5 = 0  
+  if autores['Denise Cristina Lima de Andrade']:
+    proponente5 = 1
+  proponente6 = 0  
+  if autores['Eunice Maria Mendes']:
+    proponente6 = 1
+  proponente7 = 0  
+  if autores['Giulliano Sousa Rodrigues']:
+    proponente7 = 1
+  proponente8 = 0  
+  if autores['Leonardo Rodrigues da Silva Neto']:
+    proponente8 = 1
+  proponente9 = 0  
+  if autores['Marcus Vinícius Duarte']:
+    proponente9 = 1
+  proponente10 = 0  
+  if autores['Paulo Cesar Pereira']:
+    proponente10 = 1
+  proponente11 = 0  
+  if autores['Renato De Almeida']:
+    proponente11 = 1
+  proponente12 = 0  
+  if autores['Rodrigo Costa Ferreira']:
+    proponente12 = 1  
+  proponente13 = 0  
+  if autores['Sebastião Alves Ribeiro Júnior']:
+    proponente13 = 1
+  proponente14 = 0  
+  if autores['Sebastião Joaquim Vieira']:
+    proponente14 = 1
+  proponente15 = 0  
+  if autores['Waltemir Rodrigues Neves']:
+    proponente15 = 1
+  proponente16 = 0  
+  if autores['Wellington Resende da Silva']:
+    proponente16 = 1  
+  proponente17 = 0  
+  if autores['Wilian Marques Postigo']:
+    proponente17 = 1
+    
+#######################################
+---
+
+mandatory: True
+section: Checagem
+progress: 90
+question: |
+  #Confira os seus dados:  
+  
+  Requerimento de Dispensa para o Projeto de Lei n.${ numero_pl }
+ 
+    
+  
+
+back button: True
+back button label: |
+  Voltar.
+buttons:
+ - Conferido. Gerar modelo de documento: continue
+#########################################
+---
+mandatory: True
+
+section: Impressão
+question: |
+  Documento Gerado. Baixe o docx e edite se necessário, antes de imprimir. Tente não mexer na formatação para não perdermos o padrão.
+attachment:
+  name: Requerimento 
+  language: pt
+  filename: req_${ autor }__${ ano }
+  
+  docx template file: req_dispensa.docx
+  valid formats:
+#    - pdf
+    - docx
+
+progress: 100
+
+#########################################
+---
+sections:
+ - Dados dos Parlamentares
+ - Dados do Requerimento
+ - Checagem
+ - Impressão
+#########################################
+---
+features:
+  navigation: vertical
+  progress bar: True
+  question back button: True
+#########################################
+---

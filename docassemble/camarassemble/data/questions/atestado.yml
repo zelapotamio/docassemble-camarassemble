@@ -1,5 +1,5 @@
 metadata:
-  title: Moção
+  title: Atestado
 ---
 initial: True
 code: |
@@ -7,10 +7,10 @@ code: |
 ---
 progress: 20
 mandatory: True
-section: Dados da Moção
-question: Dados da Moção
+section: Dados do Parlamentar
+question: Dados do Parlamentar
 fields:
-  - 'Autor:': autor
+  - 'Nome:': autor
     datatype: dropdown
     choices:
     - Ana Lúcia Rodrigues Prado
@@ -31,58 +31,21 @@ fields:
     - Wellington Resende da Silva	
     - Wilian Marques Postigo
     required: True
-    
-    
-  - 'Tipo de moção:': tipomocao
-    datatype: dropdown
-    choices:
-    - aplauso
-    - apoio
-    - apelo
-    - protesto
-    - repúdio
-    required: True
-  
-  - 'Tratamento:': exmosr
-    datatype: dropdown
-    choices:
-    - ao senhor
-    - à senhora
-    - ao excelentíssimo senhor
-    - à excelentíssima senhora
-    required: True
-  
-  - 'Razão:': razao_mocao
-    default: 'pelos relevantes serviços prestados na [...]'
-    datatype: area
-    required: True
-    
-  - 'Que se dê conhecimento desta moção :[BR] **OPCIONAL**': conhecimento_mocao
-    datatype: area
-    hint: 'ao senhor José da Silva, diretor da Empresa X.'
-    required: False
-    
----
 
-code: |
-  genero_agr = 'do agraciado'
-  if exmosr ==  'à excelentíssima senhora':
-    genero_agr = 'da agraciada'
-  if exmosr ==  'à senhora':
-    genero_agr = 'da agraciada'
- 
-#########################################
 #########################################
 ---
 
-section: Dados ${ genero_agr }
-question: Dados ${ genero_agr }
+section: Dados do Atestado
+question: Dados do Atestado
 fields:
-  - 'Nome': nome_agraciado
-    hint: ' Digite o nome '
+  - 'Comunicar que a falta foi por motivo: ': motivo_falta
+    datatype: area
+    default: 'de doença (atestado médico em anexo)'
     required: True
-  
- 
+  - 'Data da Falta': data_falta
+    datatype: date
+    required: True
+    
 progress: 30
 mandatory: True
 
@@ -93,15 +56,12 @@ mandatory: True
 ---
 progress: 60
 mandatory: True
-section: Justificativa / Dados Biográficos
-question: Justificativa / Dados Biográficos
+section: Atestados ou outros anexos
+question:  Atestados ou outros anexos
 fields: 
-  - 'Preencha a justificativa (opcional)': justificativa
-    datatype: area
-    required: False
   - 'Fotos ou documentos anexos': anexos
     datatype: file
-    required: False
+    required: True
   - 'Fotos ou documentos anexos': anexos2
     datatype: file
     required: False
@@ -145,8 +105,8 @@ progress: 90
 question: |
   #Confira os seus dados:  
   
-  Moção de ${ tipomocao } concedida a ${ nome_agraciado } com autoria de ${ autor }[BR]
- 
+  Atestado por motivo ${ motivo_falta } de ${ autor }[BR]
+    
   
 
 back button: True
@@ -162,11 +122,11 @@ section: Impressão
 question: |
   Documento Gerado. Baixe o docx e edite se necessário, antes de imprimir. Tente não mexer na formatação para não perdermos o padrão.
 attachment:
-  name: Moção
+  name: Atestado 
   language: pt
-  filename: mocao_${ nome_agraciado }_-_${ autor }_${ ano }
+  filename: atestado_${ autor }_${ ano }
   
-  docx template file: mocao.docx
+  docx template file: atestado.docx
   valid formats:
 #    - pdf
     - docx
@@ -174,16 +134,16 @@ attachment:
 progress: 100
 
 #########################################
-#---
-#sections:
-# - Dados da Moção
-# - Dados do(a) agraciado(a) 
-# - Checagem
-# - Impressão
+---
+sections:
+ - Dados do Parlamentar
+ - Dados do Atestado
+ - Checagem
+ - Impressão
 #########################################
 ---
 features:
-  navigation: horizontal
+  navigation: vertical
   progress bar: True
   question back button: True
 #########################################
