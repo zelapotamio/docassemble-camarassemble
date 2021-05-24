@@ -161,7 +161,7 @@ attachment:
   
   docx template file: pl.docx
   valid formats:
-    - pdf
+#    - pdf
     - docx
 buttons:
   - SAIR: exit    

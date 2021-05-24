@@ -1,5 +1,5 @@
 metadata:
-  title: Requerimento
+  title: Projeto de Decreto Legislativo
 ---
 initial: True
 code: |
@@ -7,8 +7,8 @@ code: |
 ---
 progress: 20
 mandatory: True
-section: Dados da Moção
-question: Dados da Moção
+section: Dados do Decreto
+question: Dados do decreto
 fields:
   - 'Autor:': autor
     datatype: dropdown
@@ -33,14 +33,12 @@ fields:
     required: True
     
     
-  - 'Tipo de moção:': tipomocao
+  - 'Título:': tipomocao
     datatype: dropdown
     choices:
-    - aplauso
-    - apoio
-    - apelo
-    - protesto
-    - repúdio
+    - Título de Cidadão Honorário de Araguari
+    - Título de Cidadã Honorária de Araguari
+    - Diploma de Honra ao Mérito
     required: True
   
   - 'Tratamento:': exmosr
@@ -52,23 +50,29 @@ fields:
     - à excelentíssima senhora
     required: True
   
-  - 'Razão:': razao_mocao
-    default: 'pelos relevantes serviços prestados na [...]'
-    datatype: area
-    required: True
+#  - 'Razão:': razao_mocao
+#    default: 'pelos relevantes serviços prestados na [...]'
+#    datatype: area
+#    required: True
     
-  - 'Que se dê conhecimento desta moção a :[BR] **OPCIONAL**': conhecimento_mocao
-    datatype: area
-    required: False
+#  - 'Que se dê conhecimento desto decreto a :[BR] **OPCIONAL**': conhecimento_mocao
+#    datatype: area
+#    required: False
     
 ---
 
 code: |
   genero_agr = 'do agraciado'
+  tratamento = 'o homenageado'
+  tipo = 'Título'
   if exmosr ==  'à excelentíssima senhora':
     genero_agr = 'da agraciada'
+    tratamento = 'a homenageada'
   if exmosr ==  'à senhora':
     genero_agr = 'da agraciada'
+    tratamento = 'a homenageada'
+  if tipomocao ==  'Diploma de Honra ao Mérito':
+    tipo = 'Diploma'
  
 #########################################
 #########################################
@@ -144,7 +148,7 @@ progress: 90
 question: |
   #Confira os seus dados:  
   
-  Moção de ${ tipomocao } concedida a ${ nome_agraciado } com autoria de ${ autor }[BR]
+  Decreto de ${ tipomocao } concedida a ${ nome_agraciado } com autoria de ${ autor }[BR]
  
   
 
@@ -161,11 +165,11 @@ section: Impressão
 question: |
   Documento Gerado. Baixe o docx e edite se necessário, antes de imprimir. Tente não mexer na formatação para não perdermos o padrão.
 attachment:
-  name: Moção
+  name: Decreto Legislativo 
   language: pt
-  filename: mocao_${ nome_agraciado }_-_${ autor }_${ ano }
+  filename: pdl_${ tipo }_${ nome_agraciado }_${ autor }_${ ano }
   
-  docx template file: mocao.docx
+  docx template file: pdl.docx
   valid formats:
 #    - pdf
     - docx
@@ -175,7 +179,7 @@ progress: 100
 #########################################
 ---
 sections:
- - Dados da Moção
+ - Dados do decreto
  - Dados do(a) agraciado(a) 
  - Checagem
  - Impressão
