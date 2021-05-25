@@ -45,11 +45,32 @@ fields:
   
   - 'Ementa do Projeto de Lei': ementa
     datatype: area
+    default: 'Altera o inciso xx, do Parágrafo Único do artigo xx, da Lei n° xxx de 10 de fevereiro de 2014, de assunto aleatório de exemplo, para fins de preenchimento adequado das ementas.'
     required: True
     
   - 'Autor(a) do Projeto de Lei': autor_pl
-    datatype: area
-    required: False
+    datatype: dropdown
+    choices:
+    - Ana Lúcia Rodrigues Prado
+    - Clayton Francisco Brazão	
+    - Cláudio Coelho Pereira	
+    - Debora de Sousa Dau
+    - Denise Cristina Lima de Andrade
+    - Eunice Maria Mendes
+    - Giulliano Sousa Rodrigues	
+    - Leonardo Rodrigues da Silva Neto	
+    - Marcus Vinícius Duarte	
+    - Paulo Cesar Pereira	
+    - Renato De Almeida	
+    - Rodrigo Costa Ferreira	
+    - Sebastião Alves Ribeiro Júnior	
+    - Sebastião Joaquim Vieira	
+    - Waltemir Rodrigues Neves	
+    - Wellington Resende da Silva	
+    - Wilian Marques Postigo
+    - Executivo
+    - Outros (Digitar no Requerimento)
+    required: True
     
 progress: 30
 mandatory: True
@@ -190,7 +211,7 @@ question: |
 attachment:
   name: Requerimento 
   language: pt
-  filename: req_${ autor }__${ ano }
+  filename: req_disp_pl${ numero_pl }${ ano }
   
   docx template file: req_dispensa.docx
   valid formats:
