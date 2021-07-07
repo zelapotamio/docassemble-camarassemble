@@ -1,11 +1,5 @@
 metadata:
-  title: Projeto de Lei
----
-objects:
-  - artigo: |
-      DAList.using(
-        object_type=Thing,
-        there_are_any=True)
+  title: Moção
 ---
 initial: True
 code: |
@@ -13,10 +7,10 @@ code: |
 ---
 progress: 20
 mandatory: True
-section: Dados do Parlamentar
-question: Dados do Parlamentar
+section: Dados da Moção
+question: Dados da Moção
 fields:
-  - 'Nome:': autor
+  - 'Autor:': autor
     datatype: dropdown
     choices:
     - Ana Lúcia Rodrigues Prado
@@ -37,57 +31,70 @@ fields:
     - Wellington Resende da Silva	
     - Wilian Marques Postigo
     required: True
-
-#########################################
----
-
-progress: 40
-mandatory: True
-section: Dados do Projeto de Lei
-question: Dados do Projeto de Lei de com autoria de ${ autor }
-fields:
-  - 'Ementa do Projeto de Lei': ementa
-    datatype: area
-    default: 'Altera o inciso xx, do Parágrafo Único do artigo xx, da Lei n° xxx de 10 de fevereiro de 2014, de assunto aleatório de exemplo, para fins de preenchimento adequado das ementas.'
+    
+    
+  - 'Tipo de moção:': tipomocao
+    datatype: dropdown
+    choices:
+    - aplauso
+    - apoio
+    - apelo
+    - protesto
+    - repúdio
     required: True
-
-#########################################
----
-
-progress: 50
-mandatory: True
-question: |
-  Artigos
-subquestion: |
-  % for art in artigo:
-  [BR][TAB] >>  ${ art }. 
-  % endfor
-  [BR] **Os parágrafos, incisos e outros dispositivos** podem ser acrescentados **posteriormente** no modelo gerado.
   
-back button: False
-back button label: |
-  Voltar.
-buttons:
- - Continuar: continue
+  - 'Tratamento:': exmosr
+    datatype: dropdown
+    choices:
+    - ao senhor
+    - à senhora
+    - ao excelentíssimo senhor
+    - à excelentíssima senhora
+    required: True
+  
+  - 'Razão:': razao_mocao
+    default: 'pelos relevantes serviços prestados na [...]'
+    datatype: area
+    required: True
+    
+  - 'Que se dê conhecimento desta moção :[BR] **OPCIONAL**': conhecimento_mocao
+    datatype: area
+    hint: 'ao senhor José da Silva, diretor da Empresa X.'
+    required: False
+    
+---
+
+code: |
+  genero_agr = 'do agraciado'
+  if exmosr ==  'à excelentíssima senhora':
+    genero_agr = 'da agraciada'
+  if exmosr ==  'à senhora':
+    genero_agr = 'da agraciada'
+ 
+#########################################
 #########################################
 ---
-question: |
-  Digite o caput do 
-  ${ ordinal(i) } artigo:
+
+section: Dados ${ genero_agr }
+question: Dados ${ genero_agr }
 fields:
-  - Art. ${ i+1 }º: artigo[i].name.text
-#    datatype: area
-    required: False
----
-question: |
-  Deseja inserir mais um artigo?
-yesno: artigo.there_is_another
+  - 'Nome': nome_agraciado
+    hint: ' Digite o nome '
+    required: True
+  
+ 
+progress: 30
+mandatory: True
+
+---  
+
+
 #########################################
 ---
 progress: 60
 mandatory: True
-section: Justificativa
-question: Justificativa
+section: Justificativa / Dados Biográficos
+question: Justificativa / Dados Biográficos
 fields: 
   - 'Preencha a justificativa (opcional)': justificativa
     datatype: area
@@ -120,6 +127,7 @@ code: |
   
     ano = today().year
     data = today() 
+
 #########################################
 ---
 
@@ -137,9 +145,8 @@ progress: 90
 question: |
   #Confira os seus dados:  
   
-  Projeto de Lei com autoria de ${ autor }[BR]
-  Ementa: [BR]
-  ´ ${ ementa } ´ [BR]
+  Moção de ${ tipomocao } concedida a ${ nome_agraciado } com autoria de ${ autor }[BR]
+ 
   
 
 back button: True
@@ -155,31 +162,28 @@ section: Impressão
 question: |
   Documento Gerado. Baixe o docx e edite se necessário, antes de imprimir. Tente não mexer na formatação para não perdermos o padrão.
 attachment:
-  name: Projeto de Lei
+  name: Moção
   language: pt
-  filename: PL_${ autor }__${ ano }
+  filename: mocao_${ nome_agraciado }_-_${ autor }_${ ano }
   
-  docx template file: pl.docx
+  docx template file: mocao.docx
   valid formats:
 #    - pdf
     - docx
-buttons:
-  - SAIR: exit    
 
 progress: 100
 
 #########################################
----
-sections:
- - Dados do Parlamentar
- - Dados do Projeto de Lei
- - Artigos
- - Checagem
- - Impressão
+#---
+#sections:
+# - Dados da Moção
+# - Dados do(a) agraciado(a) 
+# - Checagem
+# - Impressão
 #########################################
 ---
 features:
-  navigation: vertical
+  navigation: horizontal
   progress bar: True
   question back button: True
 #########################################

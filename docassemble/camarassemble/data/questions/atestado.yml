@@ -1,11 +1,5 @@
 metadata:
-  title: Projeto de Lei
----
-objects:
-  - artigo: |
-      DAList.using(
-        object_type=Thing,
-        there_are_any=True)
+  title: Atestado
 ---
 initial: True
 code: |
@@ -41,60 +35,33 @@ fields:
 #########################################
 ---
 
-progress: 40
-mandatory: True
-section: Dados do Projeto de Lei
-question: Dados do Projeto de Lei de com autoria de ${ autor }
+section: Dados do Atestado
+question: Dados do Atestado
 fields:
-  - 'Ementa do Projeto de Lei': ementa
+  - 'Comunicar que a falta foi por motivo: ': motivo_falta
     datatype: area
-    default: 'Altera o inciso xx, do Parágrafo Único do artigo xx, da Lei n° xxx de 10 de fevereiro de 2014, de assunto aleatório de exemplo, para fins de preenchimento adequado das ementas.'
+    default: 'de doença (atestado médico em anexo)'
     required: True
-
-#########################################
----
-
-progress: 50
+  - 'Data da Falta': data_falta
+    datatype: date
+    required: True
+    
+progress: 30
 mandatory: True
-question: |
-  Artigos
-subquestion: |
-  % for art in artigo:
-  [BR][TAB] >>  ${ art }. 
-  % endfor
-  [BR] **Os parágrafos, incisos e outros dispositivos** podem ser acrescentados **posteriormente** no modelo gerado.
-  
-back button: False
-back button label: |
-  Voltar.
-buttons:
- - Continuar: continue
-#########################################
----
-question: |
-  Digite o caput do 
-  ${ ordinal(i) } artigo:
-fields:
-  - Art. ${ i+1 }º: artigo[i].name.text
-#    datatype: area
-    required: False
----
-question: |
-  Deseja inserir mais um artigo?
-yesno: artigo.there_is_another
+
+---  
+
+
 #########################################
 ---
 progress: 60
 mandatory: True
-section: Justificativa
-question: Justificativa
+section: Atestados ou outros anexos
+question:  Atestados ou outros anexos
 fields: 
-  - 'Preencha a justificativa (opcional)': justificativa
-    datatype: area
-    required: False
   - 'Fotos ou documentos anexos': anexos
     datatype: file
-    required: False
+    required: True
   - 'Fotos ou documentos anexos': anexos2
     datatype: file
     required: False
@@ -120,6 +87,7 @@ code: |
   
     ano = today().year
     data = today() 
+
 #########################################
 ---
 
@@ -137,9 +105,8 @@ progress: 90
 question: |
   #Confira os seus dados:  
   
-  Projeto de Lei com autoria de ${ autor }[BR]
-  Ementa: [BR]
-  ´ ${ ementa } ´ [BR]
+  Atestado por motivo ${ motivo_falta } de ${ autor }[BR]
+    
   
 
 back button: True
@@ -155,16 +122,14 @@ section: Impressão
 question: |
   Documento Gerado. Baixe o docx e edite se necessário, antes de imprimir. Tente não mexer na formatação para não perdermos o padrão.
 attachment:
-  name: Projeto de Lei
+  name: Atestado 
   language: pt
-  filename: PL_${ autor }__${ ano }
+  filename: atestado_${ autor }_${ ano }
   
-  docx template file: pl.docx
+  docx template file: atestado.docx
   valid formats:
 #    - pdf
     - docx
-buttons:
-  - SAIR: exit    
 
 progress: 100
 
@@ -172,8 +137,7 @@ progress: 100
 ---
 sections:
  - Dados do Parlamentar
- - Dados do Projeto de Lei
- - Artigos
+ - Dados do Atestado
  - Checagem
  - Impressão
 #########################################

@@ -1,5 +1,5 @@
 metadata:
-  title: Projeto de Lei
+  title: Projeto de Resolução
 ---
 objects:
   - artigo: |
@@ -43,8 +43,8 @@ fields:
 
 progress: 40
 mandatory: True
-section: Dados do Projeto de Lei
-question: Dados do Projeto de Lei de com autoria de ${ autor }
+section: Dados do Projeto de Resolução
+question: Dados do Projeto de Resolução de com autoria de ${ autor }
 fields:
   - 'Ementa do Projeto de Lei': ementa
     datatype: area
@@ -89,9 +89,10 @@ mandatory: True
 section: Justificativa
 question: Justificativa
 fields: 
-  - 'Preencha a justificativa (opcional)': justificativa
+  - 'Preencha a justificativa': justificativa
     datatype: area
-    required: False
+    default: 'OBSERVAÇÃO: o projeto de decreto legislativo tem por objetivo regular matéria de competência privativa da Câmara. “Distingue-se da resolução, pois esta só deverá ter por conteúdo assunto político-administrativo, com repercussão interna apenas, enquanto o decreto legislativo disciplina assunto que extravasa os limites da Câmara.'
+    required: True
   - 'Fotos ou documentos anexos': anexos
     datatype: file
     required: False
@@ -157,9 +158,9 @@ question: |
 attachment:
   name: Projeto de Lei
   language: pt
-  filename: PL_${ autor }__${ ano }
+  filename: PR_${ autor }__${ ano }
   
-  docx template file: pl.docx
+  docx template file: pr.docx
   valid formats:
 #    - pdf
     - docx
@@ -172,7 +173,7 @@ progress: 100
 ---
 sections:
  - Dados do Parlamentar
- - Dados do Projeto de Lei
+ - Dados do Projeto de Resolução
  - Artigos
  - Checagem
  - Impressão

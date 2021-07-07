@@ -194,7 +194,7 @@ attachment:
   
   docx template file: req_ap.docx
   valid formats:
-    - pdf
+#    - pdf
     - docx
 
 progress: 100

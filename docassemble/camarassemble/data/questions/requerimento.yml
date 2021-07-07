@@ -140,7 +140,7 @@ attachment:
   
   docx template file: requerimento.docx
   valid formats:
-    - pdf
+#    - pdf
     - docx
 
 progress: 100
